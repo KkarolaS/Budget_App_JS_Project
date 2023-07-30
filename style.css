@@ -14,7 +14,215 @@
   --vining-ivy: #497174;
 }
 
-body {
+html {
   scroll-behavior: smooth;
+}
+
+body {
   background-color: var(--backery-box);
 }
+
+.page-container {
+  width: 360px;
+  font-family: "Avenir";
+  display: flex;
+  flex-direction: column;
+}
+/* header */
+
+.app-header {
+  height: 100px;
+  gap: 20px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 85px;
+  height: 85px;
+}
+
+.header-text-wrapper {
+  color: var(--vining-ivy);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 900;
+  text-shadow: 1px 3px 5px rgb(192, 192, 198);
+}
+.header-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 1px 3px 5px rgb(192, 192, 198);
+  margin-left: 20px;
+}
+
+/* welcome section */
+.welcome-container {
+  height: 270px;
+  margin-top: 20px;
+  background-color: var(--vining-ivy);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+.welcome-text-wrapper {
+  padding: 10px 20px;
+  color: var(--backery-box);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 12px;
+}
+.welcome-title {
+  margin-top: 20px;
+  font-size: 18px;
+}
+.month-info-btn {
+  background-color: var(--opulent-orange);
+  color: var(--backery-box);
+  max-width: 100px;
+  height: 25px;
+  align-self: center;
+  border-radius: 30px;
+  box-shadow: 1px 3px 5px rgb(139, 139, 146);
+  border: none;
+  cursor: pointer;
+  transition: transfor 0.5s ease;
+}
+.month-info-btn:hover,
+.month-info-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0px 0.5em 5px 0.5em -0.8em var(--opulent-orange);
+}
+.announcement {
+  font-size: 15px;
+}
+
+/* income/outcome sections */
+
+.income-expanse-container {
+  width: 1000px;
+  display: flex;
+  gap: 20px;
+}
+
+.income-container {
+  margin-left: 20px;
+}
+.income-container,
+.expense-container {
+  background-color: var(--era);
+  width: 300px;
+  margin-top: -120px;
+  max-height: 250px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 10px 20px;
+}
+
+.list-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--vining-ivy);
+}
+.income-expense-header-container {
+  margin-top: 20px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-input {
+  color: var(--vining-ivy);
+  background-color: var(--backery-box);
+  border: none;
+}
+.amount-input {
+  color: var(--vining-ivy);
+  background-color: var(--backery-box);
+  max-width: 60px;
+  border: none;
+}
+.add-btn {
+  color: var(--backery-box);
+  background-color: var(--vining-ivy);
+  border: none;
+  border-radius: 20px;
+}
+.list-container {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--vining-ivy);
+}
+
+.list-items {
+}
+
+.sum-container {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--white);
+  background-color: var(--opulent-orange);
+  border-radius: 10px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.sum-title {
+  padding: 10px;
+}
+.sum {
+  padding: 10px;
+}
+
+/* arrows */
+.side-to-side-btn-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.right-left-btn {
+  background-color: var(--backery-box);
+  border: none;
+  cursor: pointer;
+}
+
+/* footer */
+.app-footer {
+  height: 50px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 20px;
+}
+.company-name {
+  color: var(--vining-ivy);
+  font-size: 15px;
+  font-weight: 400;
+}
+.fb-insta-logo-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.footer-icon-btn {
+  width: 28px;
+  aspect-ratio: 1;
+  background-color: var(--vining-ivy);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+/* TODO przyczepić footer do samego dołu  */
+/* TODO poprawić imput */

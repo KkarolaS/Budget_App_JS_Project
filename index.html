@@ -8,62 +8,97 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="app-header">
-      <img class="logo" src="" alt="image logo" />
-      <h1 class="header-title">Budget App</h1>
-      <h3 class="header-subtitle">i masz wszystko pod kontrolą!</h3>
-    </header>
+    <div class="page-container">
+      <header class="app-header">
+        <img
+          class="logo"
+          src="assets/image/Budget_App_Logo 1.svg"
+          alt="image logo"
+        />
+        <div class="header-text-wrapper">
+          <h1 class="header-title">Budget App</h1>
+          <h3 class="header-subtitle">i masz wszystko pod kontrolą</h3>
+        </div>
+      </header>
 
-    <section class="welcome-container">
-      <h2 class="welcome-contailer-title">Witaj w swoim domowym budżecie !</h2>
-      <p class="announcement">Wprowadź swój pierwszy przychód lub wydatek</p>
-      <!-- zmień js na inny kominikacj = > < (if) -->
-    </section>
+      <section class="welcome-container">
+        <div class="welcome-text-wrapper">
+          <h2 class="welcome-title">Witaj w swoim domowym budżecie !</h2>
+          <button class="month-info-btn">Lipiec 2023</button>
+          <p class="announcement">
+            Wprowadź swój pierwszy przychód lub wydatek
+          </p>
+        </div>
+        <!-- zmień js na inny kominikacj = > < (if) -->
+      </section>
 
-    <section class="income-container">
-      <div class="income-expense-header-container">
-        <input type="text" value="Nazwa przychodu" class="name-input" />
-        <input type="text" value="Kwota przychodu" class="amount-input" />
-        <!-- usuń js value po kliknięciu -->
-        <!-- zmień kolor value wyświetlanego na szarawy -->
-        <button class="add-btn">Dodaj</button>
-      </div>
-      <div class="list-container">
-        <h3 class="list-title"></h3>
-        <ul class="list-items"></ul>
-      </div>
-      <div class="sum-container">
-        <p class="sum-title">Suma Twoich przychodów:</p>
-        <p class="sum">0 zł</p>
-      </div>
-    </section>
+      <section class="income-expanse-container">
+        <section class="income-container">
+          <h3 class="list-title">Przychód</h3>
+          <div class="income-expense-header-container">
+            <input type="text" value="Nazwa przychodu" class="name-input" />
+            <input type="text" value="Kwota" class="amount-input" />
+            <!-- usuń js value po kliknięciu -->
+            <!-- zmień kolor value wyświetlanego na szarawy -->
+            <button class="add-btn">Dodaj</button>
+          </div>
+          <div class="list-container">
+            <ul class="list-items"></ul>
 
-    <section class="expanse-container">
-      <div class="income-expense-header-container">
-        <input type="text" value="Nazwa wydatku" class="name-input" />
-        <input type="text" value="Kwota wydatku" class="amount-input" />
-        <!-- usuń js value po kliknięciu -->
-        <!-- zmień kolor value wyświetlanego na szarawy -->
-        <button class="add-btn">Dodaj</button>
-      </div>
-      <div class="list-container">
-        <h3 class="list-title"></h3>
-        <ul class="list-items"></ul>
-      </div>
-      <div class="sum-container">
-        <p class="sum-title">Suma Twoich wydatków:</p>
-        <p class="sum">0 zł</p>
-      </div>
-    </section>
+            <!-- dodaj button usuń / dodaj w zaleznosci od tego czy jest cos dodane na liscie -->
+          </div>
+          <!-- dodaj kropeczki jak jest więcej niz 5 pozycji dopiero po kliknieciu roszczerza sie -->
+          <div class="sum-container">
+            <p class="sum-title">Suma przychodów:</p>
+            <p class="sum">0 zł</p>
+          </div>
+        </section>
 
-    <footer class="app-footer">
-      <p class="company-name">BudgetApp Company Sp. z o.o. ©</p>
-      <div class="fb-insta-logo-container">
-        <img src="" alt="facebook logo" class="fb-logo" />
-        <img src="" alt="instagram logo" class="insta-logo" />
-      </div>
-    </footer>
+        <section class="expense-container">
+          <h3 class="list-title">Wydatek</h3>
+          <div class="income-expense-header-container">
+            <input type="text" value="Nazwa wydatku" class="name-input" />
+            <input type="text" value="Kwota" class="amount-input" />
+            <!-- usuń js value po kliknięciu -->
+            <!-- zmień kolor value wyświetlanego na szarawy -->
+            <button class="add-btn">Dodaj</button>
+          </div>
+          <div class="list-container">
+            <ul class="list-items"></ul>
+          </div>
+          <div class="sum-container">
+            <p class="sum-title">Suma wydatków:</p>
+            <p class="sum">0 zł</p>
+          </div>
+        </section>
+      </section>
 
+      <div class="side-to-side-btn-wrapper">
+        <button class="right-left-btn">
+          <img src="assets/image/Left-arrow.svg" alt="arrow left" />
+        </button>
+        <button class="right-left-btn">
+          <img src="assets/image/Right-arrow.svg" alt="arrow right" />
+        </button>
+      </div>
+
+      <footer class="app-footer">
+        <p class="company-name">BudgetApp Company Sp. z o.o. ©</p>
+        <div class="fb-insta-logo-container">
+          <button class="footer-icon-btn">
+            <i class="fa-brands fa-facebook-f fa-lg"></i>
+          </button>
+          <button class="footer-icon-btn">
+            <i class="fa-brands fa-instagram fa-lg"></i>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <script
+      src="https://kit.fontawesome.com/3da08e9c43.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="index.js" charset="utf-8"></script>
   </body>
 </html>
