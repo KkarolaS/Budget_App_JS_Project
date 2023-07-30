@@ -163,6 +163,9 @@ body {
 }
 
 .list-items {
+  font-size: 14px;
+  font-weight: 200;
+  color: var(--vining-ivy);
 }
 
 .sum-container {
