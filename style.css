@@ -203,13 +203,29 @@ body {
   display: flex;
   gap: 5px;
 }
+
+/* .btn-wrapper {
+  margin-left: -250px;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  z-index: -21;
+} */
+
 .change-btn,
-.delete-btn {
+.delete-btn,
+.change-accept-btn {
   background-color: var(--backery-box);
   color: var(--vining-ivy);
   font-size: 12px;
 }
 
+.input:focus {
+  height: 35px;
+  border: 3px solid #555555;
+}
+
+/* sumowanie */
 .sum-container {
   font-size: 16px;
   font-weight: 400;

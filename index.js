@@ -63,18 +63,34 @@ const createIncomeList = () => {
 
       const changeBtn = createChangeBtn();
       btnWrapper.appendChild(changeBtn);
+
       changeBtn.addEventListener("click", function () {
+        // const changeElmWrapper = document.createElement("div");
+        // changeElmWrapper.classList.add("change-elm-wrapper");
+        // elementContainer.appendChild(changeElmWrapper);
+
         const changeInput = document.createElement("input");
-        changeInput.id = "changeInput";
+        // changeInput.id = "change-input";
+        changeInput.classList.add("input");
         changeInput.value = li.textContent;
         li.classList.add("hidden");
+        changeBtn.classList.add("hidden");
+        deleteBtn.classList.add("hidden");
         elementContainer.appendChild(changeInput);
-        changeBtn.addEventListener("click", function () {
+
+        const changeAcceptBtn = document.createElement("button");
+        // changeAcceptBtn.id = "change-accept-btn";
+        changeAcceptBtn.classList.add("change-accept-btn", "add-btn");
+        changeAcceptBtn.textContent = "Zapisz";
+        elementContainer.appendChild(changeAcceptBtn);
+
+        changeAcceptBtn.addEventListener("click", function () {
           li.textContent = changeInput.value;
           li.classList.remove("hidden");
+          changeBtn.classList.remove("hidden");
+          deleteBtn.classList.remove("hidden");
           elementContainer.removeChild(changeInput);
-          //na tym samym buttonie
-          //dodać osobny button na ten click
+          elementContainer.removeChild(changeAcceptBtn);
         });
       });
 
