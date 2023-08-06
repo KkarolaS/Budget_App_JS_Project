@@ -203,14 +203,11 @@ body {
   display: flex;
   gap: 5px;
 }
-
-/* .btn-wrapper {
-  margin-left: -250px;
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
-  z-index: -21;
-} */
+.change-input {
+  margin: 0;
+  margin-left: -80px;
+  padding-left: 10px;
+}
 
 .change-btn,
 .delete-btn,

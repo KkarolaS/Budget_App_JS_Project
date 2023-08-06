@@ -65,13 +65,10 @@ const createIncomeList = () => {
       btnWrapper.appendChild(changeBtn);
 
       changeBtn.addEventListener("click", function () {
-        // const changeElmWrapper = document.createElement("div");
-        // changeElmWrapper.classList.add("change-elm-wrapper");
-        // elementContainer.appendChild(changeElmWrapper);
-
         const changeInput = document.createElement("input");
         // changeInput.id = "change-input";
-        changeInput.classList.add("input");
+        changeInput.classList.add("input", "change-input");
+
         changeInput.value = li.textContent;
         li.classList.add("hidden");
         changeBtn.classList.add("hidden");
