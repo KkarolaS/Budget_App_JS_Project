@@ -179,12 +179,35 @@ body {
 }
 
 .list-items {
+  padding-top: 10px;
+  padding-left: 20px;
   font-size: 14px;
   font-weight: 200;
   color: var(--vining-ivy);
 }
 
+.input-btn-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .icome-item {
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-wrapper {
+  display: flex;
+  gap: 5px;
+}
+.change-btn,
+.delete-btn {
+  background-color: var(--backery-box);
+  color: var(--vining-ivy);
+  font-size: 12px;
 }
 
 .sum-container {
