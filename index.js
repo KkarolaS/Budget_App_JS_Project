@@ -60,7 +60,6 @@ const createIncomeList = () => {
 
       const btnWrapper = createBtnWrapper();
       elementContainer.appendChild(btnWrapper);
-
       const changeBtn = createChangeBtn();
       btnWrapper.appendChild(changeBtn);
 
@@ -68,7 +67,6 @@ const createIncomeList = () => {
         const changeInput = document.createElement("input");
         // changeInput.id = "change-input";
         changeInput.classList.add("input", "change-input");
-
         changeInput.value = li.textContent;
         li.classList.add("hidden");
         changeBtn.classList.add("hidden");
@@ -107,7 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
   createIncomeList();
 });
 
+//A. change podzielic na input + value
 //
+//
+//
+//1.sumowanie - kazda wartosc amout li dodawana do array []
+// 2. potem sumowanie
 //
 //
 //
