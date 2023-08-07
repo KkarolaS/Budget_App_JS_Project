@@ -5,7 +5,7 @@ const amountExpenseInput = document.querySelector("#amount-expense-input");
 const incomeAddButton = document.querySelector("#income-add-button");
 const expanseAddButton = document.querySelector("#expense-add-button");
 
-// create list with inputs and add icome and expanse inputs to list
+//add icome inputs to list
 const createInputElement = (value) => {
   const incomeItem = document.createElement("li");
   incomeItem.classList.add("icome-item");
@@ -44,34 +44,65 @@ const createBtnWrapper = () => {
   return btnWrapper;
 };
 
+const sumArray = [];
+
+const sumIncome = () => {
+  const newSumArray = sumArray.map((item) => {
+    return item.replace(",", ".");
+  });
+
+  let sumNumberArray = newSumArray.map(Number);
+  sumNumberArray = sumNumberArray.filter((item) => {
+    if (item !== NaN && item !== 0) {
+      return item;
+    }
+  });
+  const sumIncomeItems = sumNumberArray.reduce((acc, number) => {
+    return acc + number;
+  }, 0);
+  const fixedSumIncomeItems = sumIncomeItems.toFixed(2);
+  const incomeSumInfo = document.querySelector("#income-sum");
+
+  incomeSumInfo.textContent = `${fixedSumIncomeItems} zł`;
+};
+
 const createIncomeList = () => {
   const incomeList = document.querySelector("#income-list");
 
   incomeAddButton.addEventListener("click", function () {
-    const incomeInputName = incomeInput.value;
-    const incomeAmountName = amountIncomeInput.value;
+    let incomeInputName = incomeInput.value;
+    let incomeAmountName = amountIncomeInput.value;
+    incomeAmountName = incomeAmountName.replace(".", ",");
     if (incomeInputName !== "" && incomeAmountName !== "") {
-      const fullItemName = `${incomeInputName} - ${incomeAmountName} zł`;
+      let fullItemName = `${incomeInputName} - ${incomeAmountName} zł`;
+
       const elementContainer = createTextBtnContainer();
       incomeList.appendChild(elementContainer);
-
       const li = createInputElement(fullItemName);
       elementContainer.appendChild(li);
-
+      const amountArrCount = sumArray.push(incomeAmountName);
       const btnWrapper = createBtnWrapper();
       elementContainer.appendChild(btnWrapper);
       const changeBtn = createChangeBtn();
       btnWrapper.appendChild(changeBtn);
 
       changeBtn.addEventListener("click", function () {
-        const changeInput = document.createElement("input");
-        // changeInput.id = "change-input";
-        changeInput.classList.add("input", "change-input");
-        changeInput.value = li.textContent;
+        const changeInputName = document.createElement("input");
+        // changeInputName.id = "change-input";
+        changeInputName.classList.add(
+          "input",
+          "change-input",
+          "change-input-name"
+        );
+        changeInputName.value = incomeInputName;
+        elementContainer.appendChild(changeInputName);
+        const changeInputAmount = document.createElement("input");
+        changeInputAmount.classList.add("input", "change-input");
+        changeInputAmount.value = incomeAmountName;
+        elementContainer.appendChild(changeInputAmount);
         li.classList.add("hidden");
         changeBtn.classList.add("hidden");
         deleteBtn.classList.add("hidden");
-        elementContainer.appendChild(changeInput);
 
         const changeAcceptBtn = document.createElement("button");
         // changeAcceptBtn.id = "change-accept-btn";
@@ -80,11 +111,19 @@ const createIncomeList = () => {
         elementContainer.appendChild(changeAcceptBtn);
 
         changeAcceptBtn.addEventListener("click", function () {
-          li.textContent = changeInput.value;
+          incomeInputName = changeInputName.value;
+          incomeAmountName = changeInputAmount.value;
+          incomeAmountName = incomeAmountName.replace(".", ",");
+          fullItemName = `${incomeInputName} - ${incomeAmountName} zł`;
+          li.textContent = fullItemName;
+          sumArray[amountArrCount - 1] = incomeAmountName;
+          sumIncome();
+
           li.classList.remove("hidden");
           changeBtn.classList.remove("hidden");
           deleteBtn.classList.remove("hidden");
-          elementContainer.removeChild(changeInput);
+          elementContainer.removeChild(changeInputName);
+          elementContainer.removeChild(changeInputAmount);
           elementContainer.removeChild(changeAcceptBtn);
         });
       });
@@ -97,6 +136,7 @@ const createIncomeList = () => {
 
       incomeInput.value = "";
       amountIncomeInput.value = "";
+      sumIncome();
     }
   });
 };
@@ -105,12 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
   createIncomeList();
 });
 
-//A. change podzielic na input + value
-//
-//
-//
-//1.sumowanie - kazda wartosc amout li dodawana do array []
-// 2. potem sumowanie
 //
 //
 //

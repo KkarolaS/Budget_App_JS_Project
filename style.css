@@ -204,9 +204,11 @@ body {
   gap: 5px;
 }
 .change-input {
-  margin: 0;
-  margin-left: -80px;
-  padding-left: 10px;
+  width: 100px;
+}
+
+.change-input-name {
+  margin-left: -25px;
 }
 
 .change-btn,
@@ -270,11 +272,12 @@ body {
 .fb-insta-logo-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
 }
 
 .footer-icon-btn {
-  width: 28px;
+  width: 30px;
   aspect-ratio: 1;
   background-color: var(--vining-ivy);
   color: var(--white);
