@@ -53,12 +53,13 @@ const sumIncome = () => {
   });
 
   let sumNumberArray = newSumArray.map(Number);
-  console.log(sumNumberArray);
   sumNumberArray = sumNumberArray.filter((item) => {
     if (item !== NaN && item !== 0) {
       return item;
     }
   });
+  console.log(sumNumberArray);
+
   const sumIncomeItems = sumNumberArray.reduce((acc, number) => {
     return acc + number;
   }, 0);
@@ -82,7 +83,8 @@ const createIncomeList = () => {
       incomeList.appendChild(elementContainer);
       const li = createInputElement(fullItemName);
       elementContainer.appendChild(li);
-      const amountArrCount = sumArray.push(incomeAmountName);
+      const amountArrLenght = sumArray.push(incomeAmountName);
+      const amountArrCount = amountArrLenght - 1;
       sumIncome();
 
       const btnWrapper = createBtnWrapper();
@@ -122,7 +124,8 @@ const createIncomeList = () => {
           incomeAmountName = incomeAmountName.replace(".", ",");
           fullItemName = `${incomeInputName} - ${incomeAmountName} zł`;
           li.textContent = fullItemName;
-          sumArray[amountArrCount - 1] = incomeAmountName;
+          sumArray[amountArrCount] = incomeAmountName;
+          console.log(amountArrCount);
           sumIncome();
 
           li.classList.remove("hidden");
@@ -138,9 +141,14 @@ const createIncomeList = () => {
       btnWrapper.appendChild(deleteBtn);
       deleteBtn.addEventListener("click", function () {
         incomeList.removeChild(elementContainer);
-        sumArray[amountArrCount - 1] = "0";
-        // sumArray.splice(amountArrCount - 1, 1);
+
+        // sumArray.splice(amountArrCount, 1);
+        // amountArrCount - 1;
         //powysze nie działa bo się gubi
+
+        sumArray[amountArrCount] = "0";
+        console.log(amountArrCount);
+
         sumIncome();
       });
 
