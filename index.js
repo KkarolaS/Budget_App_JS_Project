@@ -47,11 +47,13 @@ const createBtnWrapper = () => {
 const sumArray = [];
 
 const sumIncome = () => {
+  console.log(sumArray);
   const newSumArray = sumArray.map((item) => {
     return item.replace(",", ".");
   });
 
   let sumNumberArray = newSumArray.map(Number);
+  console.log(sumNumberArray);
   sumNumberArray = sumNumberArray.filter((item) => {
     if (item !== NaN && item !== 0) {
       return item;
@@ -81,6 +83,8 @@ const createIncomeList = () => {
       const li = createInputElement(fullItemName);
       elementContainer.appendChild(li);
       const amountArrCount = sumArray.push(incomeAmountName);
+      sumIncome();
+
       const btnWrapper = createBtnWrapper();
       elementContainer.appendChild(btnWrapper);
       const changeBtn = createChangeBtn();
@@ -100,6 +104,8 @@ const createIncomeList = () => {
         changeInputAmount.classList.add("input", "change-input");
         changeInputAmount.value = incomeAmountName;
         elementContainer.appendChild(changeInputAmount);
+        sumIncome();
+
         li.classList.add("hidden");
         changeBtn.classList.add("hidden");
         deleteBtn.classList.add("hidden");
@@ -132,17 +138,21 @@ const createIncomeList = () => {
       btnWrapper.appendChild(deleteBtn);
       deleteBtn.addEventListener("click", function () {
         incomeList.removeChild(elementContainer);
+        sumArray[amountArrCount - 1] = "0";
+        // sumArray.splice(amountArrCount - 1, 1);
+        //powysze nie działa bo się gubi
+        sumIncome();
       });
 
       incomeInput.value = "";
       amountIncomeInput.value = "";
-      sumIncome();
     }
   });
 };
 
 document.addEventListener("DOMContentLoaded", function () {
   createIncomeList();
+  sumIncome();
 });
 
 //
