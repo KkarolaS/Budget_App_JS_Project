@@ -1,5 +1,7 @@
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+
 //MODEL BUDGET APP
-let totalAmount = 0;
+let incomes = [];
 
 //VIEW
 const incomeList = document.querySelector("#income-list");
@@ -21,22 +23,6 @@ const createInputElement = (value, classIdName) => {
   return incomeItem;
 };
 
-const createChangeBtn = () => {
-  const changeBtn = document.createElement("button");
-  changeBtn.classList.add("change-btn", "add-btn");
-  changeBtn.id = "change-btn";
-  changeBtn.textContent = "Zmień";
-  return changeBtn;
-};
-
-const createDeleteBtn = () => {
-  const deleteBtn = document.createElement("button");
-  deleteBtn.classList.add("delete-btn", "add-btn");
-  deleteBtn.id = "delete-btn";
-  deleteBtn.textContent = "Usuń";
-  return deleteBtn;
-};
-
 const createBtnWrapper = (changeBtn, deleteBtn) => {
   const btnWrapper = document.createElement("div");
   btnWrapper.id = "btn-wrapper";
@@ -46,10 +32,9 @@ const createBtnWrapper = (changeBtn, deleteBtn) => {
   return btnWrapper;
 };
 
-//tworzy container dla inputu <li> i wrapper dla przycisku change i delete
-const createTextBtnContainer = (item, btnWrapper) => {
+const createTextBtnContainer = (item, btnWrapper, id) => {
   const inputBtnContainer = document.createElement("div");
-  inputBtnContainer.id = "input-btn-container";
+  inputBtnContainer.id = `container-${id}`;
   inputBtnContainer.classList.add("input-btn-container");
   inputBtnContainer.appendChild(item);
   inputBtnContainer.appendChild(btnWrapper);
@@ -71,88 +56,130 @@ const createAcceptChangeBtn = () => {
   return changeAcceptBtn;
 };
 
+const createDeleteBtn = (id) => {
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("delete-btn", "add-btn");
+  deleteBtn.id = `delete-btn-${id}`;
+  deleteBtn.textContent = "Usuń";
+
+  deleteBtn.addEventListener("click", () => {
+    incomes = incomes.filter((item) => item.id !== id);
+    renderIncomes();
+    calculate(incomes);
+  });
+  return deleteBtn;
+};
+
+const createChangeBtn = (id) => {
+  const changeBtn = document.createElement("button");
+  changeBtn.classList.add("change-btn", "add-btn");
+  changeBtn.id = "change-btn";
+  changeBtn.textContent = "Zmień";
+
+  changeBtn.addEventListener("click", () => {
+    const elmList = document.querySelector(`#li-${id}`);
+    const deleteElmBtn = document.querySelector(`#delete-btn-${id}`);
+    elmList.classList.add("hidden");
+    changeBtn.classList.add("hidden");
+    deleteElmBtn.classList.add("hidden");
+    const elementContainer = document.querySelector(`#container-${id}`);
+
+    const incomeToChange = incomes.find((elm) => elm.id === id);
+
+    const changeInputName = createChangeElement(
+      "input",
+      "text",
+      incomeToChange.name
+    );
+    changeInputName.classList.add("change-input-name");
+    const changeInputAmount = createChangeElement(
+      "input",
+      "number",
+      incomeToChange.value
+    );
+
+    elementContainer.appendChild(changeInputName);
+    elementContainer.appendChild(changeInputAmount);
+
+    const changeAcceptBtn = createAcceptChangeBtn();
+    elementContainer.appendChild(changeAcceptBtn);
+
+    changeAcceptBtn.addEventListener("click", function () {
+      const newIncomeInputName = changeInputName.value;
+      const newIncomeInputAmount = parseFloat(changeInputAmount.value);
+
+      if (newIncomeInputName && !isNaN(newIncomeInputAmount)) {
+        incomeToChange.name = newIncomeInputName;
+        incomeToChange.value = newIncomeInputAmount;
+
+        elementContainer.removeChild(changeInputName);
+        elementContainer.removeChild(changeInputAmount);
+        elementContainer.removeChild(changeAcceptBtn);
+        renderIncomes();
+        calculate(incomes);
+      }
+    });
+  });
+  return changeBtn;
+};
+
 //UPDATE
+//funkcja sumująca
+
+const calculate = (array) => {
+  const numberArray = array.map((item) => {
+    return item.value;
+  });
+
+  const sumIncome = numberArray.reduce((acc, number) => {
+    return acc + number;
+  }, 0);
+  incomeSumInfo.textContent = `${sumIncome.toFixed(2)} zł`;
+};
+
+//funkcja tworząca element na liście:
+const createListElement = (income) => {
+  let fullItemName = `${income.name} - ${income.value.toFixed(2)} zł`;
+  const li = createInputElement(fullItemName, `li-${income.id}`);
+  const deleteBtn = createDeleteBtn(income.id);
+  const changeBtn = createChangeBtn(income.id);
+
+  const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
+  const elementContainer = createTextBtnContainer(li, btnWrapper, income.id);
+  incomeList.appendChild(elementContainer);
+};
+
+//funkcja renderująca input income
+const renderIncomes = () => {
+  incomeList.innerHTML = "";
+  incomes.forEach((income) => {
+    createListElement(income);
+  });
+};
 //funckja umozliwiająca dodawania do listy income
-const createIncomeList = () => {
+const addIncome = () => {
   let incomeInputName = incomeInput.value;
   let incomeInputAmount = amountIncomeInput.value;
   incomeInputAmount = parseFloat(incomeInputAmount);
 
   if (incomeInputName && !isNaN(incomeInputAmount)) {
-    let fullItemName = `${incomeInputName} - ${incomeInputAmount.toFixed(
-      2
-    )} zł`;
-
-    const li = createInputElement(fullItemName, "income-item");
-    const changeBtn = createChangeBtn();
-    const deleteBtn = createDeleteBtn();
-    const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
-    const elementContainer = createTextBtnContainer(li, btnWrapper);
-    incomeList.appendChild(elementContainer);
-
-    totalAmount += incomeInputAmount;
-    incomeSumInfo.textContent = `${totalAmount.toFixed(2)} zł`;
-
-    changeBtn.addEventListener("click", function () {
-      li.classList.add("hidden");
-      changeBtn.classList.add("hidden");
-      deleteBtn.classList.add("hidden");
-
-      const changeInputName = createChangeElement(
-        "input",
-        "text",
-        incomeInputName
-      );
-      changeInputName.classList.add("change-input-name");
-      elementContainer.appendChild(changeInputName);
-      const changeInputAmount = createChangeElement(
-        "input",
-        "number",
-        incomeInputAmount
-      );
-      elementContainer.appendChild(changeInputAmount);
-      const changeAcceptBtn = createAcceptChangeBtn();
-      elementContainer.appendChild(changeAcceptBtn);
-
-      changeAcceptBtn.addEventListener("click", function () {
-        const newIncomeInputName = changeInputName.value;
-        let newIncomeInputAmount = parseFloat(changeInputAmount.value);
-
-        if (newIncomeInputName && !isNaN(newIncomeInputAmount)) {
-          newIncomeInputAmount = newIncomeInputAmount;
-          totalAmount -= incomeInputAmount;
-          totalAmount += newIncomeInputAmount;
-          incomeSumInfo.textContent = `${totalAmount.toFixed(2)} zł`;
-
-          const newFullItemName = `${newIncomeInputName} - ${newIncomeInputAmount} zł`;
-          li.textContent = newFullItemName;
-          incomeInputAmount = newIncomeInputAmount;
-
-          elementContainer.removeChild(changeInputName);
-          elementContainer.removeChild(changeInputAmount);
-          elementContainer.removeChild(changeAcceptBtn);
-          li.classList.remove("hidden");
-          changeBtn.classList.remove("hidden");
-          deleteBtn.classList.remove("hidden");
-        }
-      });
+    incomes.push({
+      name: incomeInputName,
+      value: incomeInputAmount,
+      id: uuidv4(),
     });
-
-    deleteBtn.addEventListener("click", function () {
-      totalAmount -= incomeInputAmount;
-      incomeSumInfo.textContent = `${totalAmount.toFixed(2)} zł`;
-      incomeList.removeChild(elementContainer);
-    });
-
-    incomeInput.value = "";
-    amountIncomeInput.value = "";
+    renderIncomes();
+    calculate(incomes);
   }
+  incomeInput.value = "";
+  amountIncomeInput.value = "";
 };
+
 //funckja umozliwiająca dodawania do listy expense
 
 //funckja startująca dla aplikacji
 const renderApp = () => {
-  createIncomeList();
+  addIncome();
 };
 
 //EVENTY
