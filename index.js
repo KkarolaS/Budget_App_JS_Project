@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 //MODEL BUDGET APP
 let incomes = [];
 
+let expense = [];
+
 //VIEW
 const incomeList = document.querySelector("#income-list");
 const incomeInput = document.querySelector("#income-name-input");
@@ -10,19 +12,21 @@ const amountIncomeInput = document.querySelector("#amount-income-input");
 const incomeAddButton = document.querySelector("#income-add-button");
 const incomeSumInfo = document.querySelector("#income-sum");
 
+const expenseList = document.querySelector("#expense-list");
 const expenseInput = document.querySelector("#expense-name-input");
 const amountExpenseInput = document.querySelector("#amount-expense-input");
 const expenseAddButton = document.querySelector("#expense-add-button");
 const expenseSumInfo = document.querySelector("#expense-sum");
 
+//universal
 const createInputElement = (value, classIdName) => {
-  const incomeItem = document.createElement("li");
-  incomeItem.classList.add(classIdName);
-  incomeItem.id = classIdName;
-  incomeItem.textContent = value;
-  return incomeItem;
+  const inputItem = document.createElement("li");
+  inputItem.classList.add(classIdName);
+  inputItem.id = classIdName;
+  inputItem.textContent = value;
+  return inputItem;
 };
-
+//universal
 const createBtnWrapper = (changeBtn, deleteBtn) => {
   const btnWrapper = document.createElement("div");
   btnWrapper.id = "btn-wrapper";
@@ -31,7 +35,7 @@ const createBtnWrapper = (changeBtn, deleteBtn) => {
   btnWrapper.appendChild(deleteBtn);
   return btnWrapper;
 };
-
+//universal
 const createTextBtnContainer = (item, btnWrapper, id) => {
   const inputBtnContainer = document.createElement("div");
   inputBtnContainer.id = `container-${id}`;
@@ -41,6 +45,7 @@ const createTextBtnContainer = (item, btnWrapper, id) => {
   return inputBtnContainer;
 };
 
+//universal
 const createChangeElement = (elementName, typeName, inputName) => {
   const changeInputName = document.createElement(elementName);
   changeInputName.classList.add("input", "change-input");
@@ -49,13 +54,15 @@ const createChangeElement = (elementName, typeName, inputName) => {
   return changeInputName;
 };
 
+//universal
 const createAcceptChangeBtn = () => {
   const changeAcceptBtn = document.createElement("button");
   changeAcceptBtn.classList.add("change-accept-btn", "add-btn");
   changeAcceptBtn.textContent = "Zapisz";
   return changeAcceptBtn;
 };
-
+//not universal - renderIncomes/calculate
+// TODO make universal
 const createDeleteBtn = (id) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
@@ -64,12 +71,13 @@ const createDeleteBtn = (id) => {
 
   deleteBtn.addEventListener("click", () => {
     incomes = incomes.filter((item) => item.id !== id);
-    renderIncomes();
+    renderIncomes(incomeList, incomes);
     calculate(incomes);
   });
   return deleteBtn;
 };
-
+//not universal - renderIncomes/calculate
+// TODO make universal
 const createChangeBtn = (id) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
@@ -85,7 +93,6 @@ const createChangeBtn = (id) => {
     const elementContainer = document.querySelector(`#container-${id}`);
 
     const incomeToChange = incomes.find((elm) => elm.id === id);
-
     const changeInputName = createChangeElement(
       "input",
       "text",
@@ -97,25 +104,21 @@ const createChangeBtn = (id) => {
       "number",
       incomeToChange.value
     );
-
+    const changeAcceptBtn = createAcceptChangeBtn();
     elementContainer.appendChild(changeInputName);
     elementContainer.appendChild(changeInputAmount);
-
-    const changeAcceptBtn = createAcceptChangeBtn();
     elementContainer.appendChild(changeAcceptBtn);
 
     changeAcceptBtn.addEventListener("click", function () {
       const newIncomeInputName = changeInputName.value;
       const newIncomeInputAmount = parseFloat(changeInputAmount.value);
-
       if (newIncomeInputName && !isNaN(newIncomeInputAmount)) {
         incomeToChange.name = newIncomeInputName;
         incomeToChange.value = newIncomeInputAmount;
-
         elementContainer.removeChild(changeInputName);
         elementContainer.removeChild(changeInputAmount);
         elementContainer.removeChild(changeAcceptBtn);
-        renderIncomes();
+        renderIncomes(incomeList, incomes);
         calculate(incomes);
       }
     });
@@ -125,7 +128,7 @@ const createChangeBtn = (id) => {
 
 //UPDATE
 //funkcja sumująca
-
+//universal
 const calculate = (array) => {
   const numberArray = array.map((item) => {
     return item.value;
@@ -138,24 +141,27 @@ const calculate = (array) => {
 };
 
 //funkcja tworząca element na liście:
-const createListElement = (income) => {
-  let fullItemName = `${income.name} - ${income.value.toFixed(2)} zł`;
-  const li = createInputElement(fullItemName, `li-${income.id}`);
-  const deleteBtn = createDeleteBtn(income.id);
-  const changeBtn = createChangeBtn(income.id);
+//universal
+const createListElement = (item) => {
+  let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
+  const li = createInputElement(fullItemName, `li-${item.id}`);
+  const deleteBtn = createDeleteBtn(item.id);
+  const changeBtn = createChangeBtn(item.id);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
-  const elementContainer = createTextBtnContainer(li, btnWrapper, income.id);
+  const elementContainer = createTextBtnContainer(li, btnWrapper, item.id);
   incomeList.appendChild(elementContainer);
 };
 
 //funkcja renderująca input income
-const renderIncomes = () => {
-  incomeList.innerHTML = "";
-  incomes.forEach((income) => {
-    createListElement(income);
+//universal
+const renderIncomes = (list, array) => {
+  list.innerHTML = "";
+  array.forEach((item) => {
+    createListElement(item);
   });
 };
+
 //funckja umozliwiająca dodawania do listy income
 const addIncome = () => {
   let incomeInputName = incomeInput.value;
@@ -168,7 +174,7 @@ const addIncome = () => {
       value: incomeInputAmount,
       id: uuidv4(),
     });
-    renderIncomes();
+    renderIncomes(incomeList, incomes);
     calculate(incomes);
   }
   incomeInput.value = "";
