@@ -62,8 +62,7 @@ const createAcceptChangeBtn = () => {
   return changeAcceptBtn;
 };
 //not universal - renderIncomes/calculate
-// TODO make universal
-const createDeleteBtn = (id) => {
+const createDeleteBtnIncome = (id) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
   deleteBtn.id = `delete-btn-${id}`;
@@ -76,9 +75,8 @@ const createDeleteBtn = (id) => {
   });
   return deleteBtn;
 };
-//not universal - renderIncomes/calculate
-// TODO make universal
-const createChangeBtn = (id) => {
+//universal
+const createChangeBtnIncome = (id, array) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
@@ -92,7 +90,7 @@ const createChangeBtn = (id) => {
     deleteElmBtn.classList.add("hidden");
     const elementContainer = document.querySelector(`#container-${id}`);
 
-    const incomeToChange = incomes.find((elm) => elm.id === id);
+    const incomeToChange = array.find((elm) => elm.id === id);
     const changeInputName = createChangeElement(
       "input",
       "text",
@@ -118,8 +116,8 @@ const createChangeBtn = (id) => {
         elementContainer.removeChild(changeInputName);
         elementContainer.removeChild(changeInputAmount);
         elementContainer.removeChild(changeAcceptBtn);
-        renderIncomes(incomeList, incomes);
-        calculate(incomes);
+        renderIncomes(incomeList, array);
+        calculate(array);
       }
     });
   });
@@ -142,11 +140,11 @@ const calculate = (array) => {
 
 //funkcja tworząca element na liście:
 //universal
-const createListElement = (item) => {
+const createListElement = (item, array) => {
   let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
-  const deleteBtn = createDeleteBtn(item.id);
-  const changeBtn = createChangeBtn(item.id);
+  const deleteBtn = createDeleteBtnIncome(item.id);
+  const changeBtn = createChangeBtnIncome(item.id, array);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
   const elementContainer = createTextBtnContainer(li, btnWrapper, item.id);
@@ -158,7 +156,7 @@ const createListElement = (item) => {
 const renderIncomes = (list, array) => {
   list.innerHTML = "";
   array.forEach((item) => {
-    createListElement(item);
+    createListElement(item, array);
   });
 };
 
