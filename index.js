@@ -62,16 +62,18 @@ const createAcceptChangeBtn = () => {
   return changeAcceptBtn;
 };
 //not universal - renderIncomes/calculate
-const createDeleteBtnIncome = (id) => {
+const createDeleteBtnIncome = (id, array) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
   deleteBtn.id = `delete-btn-${id}`;
   deleteBtn.textContent = "Usuń";
 
   deleteBtn.addEventListener("click", () => {
-    incomes = incomes.filter((item) => item.id !== id);
-    renderIncomes(incomeList, incomes);
-    calculate(incomes);
+    if (array === incomes) {
+      incomes = incomes.filter((item) => item.id !== id);
+      renderIncomes(incomeList, incomes);
+      calculate(incomes);
+    }
   });
   return deleteBtn;
 };
@@ -143,7 +145,7 @@ const calculate = (array) => {
 const createListElement = (item, array) => {
   let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
-  const deleteBtn = createDeleteBtnIncome(item.id);
+  const deleteBtn = createDeleteBtnIncome(item.id, array);
   const changeBtn = createChangeBtn(item.id, array);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
