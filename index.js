@@ -76,7 +76,7 @@ const createDeleteBtnIncome = (id) => {
   return deleteBtn;
 };
 //universal
-const createChangeBtnIncome = (id, array) => {
+const createChangeBtn = (id, array) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
@@ -144,7 +144,7 @@ const createListElement = (item, array) => {
   let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
   const deleteBtn = createDeleteBtnIncome(item.id);
-  const changeBtn = createChangeBtnIncome(item.id, array);
+  const changeBtn = createChangeBtn(item.id, array);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
   const elementContainer = createTextBtnContainer(li, btnWrapper, item.id);
