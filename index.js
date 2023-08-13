@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 //MODEL BUDGET APP
 let incomes = [];
 
-let expense = [];
+let expenses = [];
 
 //VIEW
 const incomeList = document.querySelector("#income-list");
@@ -17,6 +17,8 @@ const expenseInput = document.querySelector("#expense-name-input");
 const amountExpenseInput = document.querySelector("#amount-expense-input");
 const expenseAddButton = document.querySelector("#expense-add-button");
 const expenseSumInfo = document.querySelector("#expense-sum");
+
+const announcement = document.querySelector("#announcement");
 
 //universal
 const createInputElement = (value, classIdName) => {
@@ -55,14 +57,15 @@ const createChangeElement = (elementName, typeName, inputName) => {
 };
 
 //universal
-const createAcceptChangeBtn = () => {
+const createAcceptChangeBtn = (id) => {
   const changeAcceptBtn = document.createElement("button");
   changeAcceptBtn.classList.add("change-accept-btn", "add-btn");
+  changeAcceptBtn.id = `change-accept-btn-${id}`;
   changeAcceptBtn.textContent = "Zapisz";
   return changeAcceptBtn;
 };
-//not universal - renderIncomes/calculate
-const createDeleteBtnIncome = (id, array) => {
+// universal
+const createDeleteBtn = (id, array) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
   deleteBtn.id = `delete-btn-${id}`;
@@ -71,14 +74,19 @@ const createDeleteBtnIncome = (id, array) => {
   deleteBtn.addEventListener("click", () => {
     if (array === incomes) {
       incomes = incomes.filter((item) => item.id !== id);
-      renderIncomes(incomeList, incomes);
+      renderInputList(incomeList, incomes);
       calculate(incomes);
+    } else if (array === expenses) {
+      expenses = expenses.filter((item) => item.id !== id);
+      renderInputList(expenseList, expenses);
+      calculate(expenses);
     }
+    bilans();
   });
   return deleteBtn;
 };
 //universal
-const createChangeBtn = (id, array) => {
+const createChangeBtn = (id, list, array) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
@@ -92,39 +100,53 @@ const createChangeBtn = (id, array) => {
     deleteElmBtn.classList.add("hidden");
     const elementContainer = document.querySelector(`#container-${id}`);
 
-    const incomeToChange = array.find((elm) => elm.id === id);
+    const elmToChange = array.find((elm) => elm.id === id);
     const changeInputName = createChangeElement(
       "input",
       "text",
-      incomeToChange.name
+      elmToChange.name
     );
     changeInputName.classList.add("change-input-name");
     const changeInputAmount = createChangeElement(
       "input",
       "number",
-      incomeToChange.value
+      elmToChange.value
     );
-    const changeAcceptBtn = createAcceptChangeBtn();
+    const changeAcceptBtn = createAcceptChangeBtn(id);
     elementContainer.appendChild(changeInputName);
     elementContainer.appendChild(changeInputAmount);
     elementContainer.appendChild(changeAcceptBtn);
 
     changeAcceptBtn.addEventListener("click", function () {
-      const newIncomeInputName = changeInputName.value;
-      const newIncomeInputAmount = parseFloat(changeInputAmount.value);
-      if (newIncomeInputName && !isNaN(newIncomeInputAmount)) {
-        incomeToChange.name = newIncomeInputName;
-        incomeToChange.value = newIncomeInputAmount;
+      const newInputName = changeInputName.value;
+      const newInputAmount = parseFloat(changeInputAmount.value);
+      if (newInputName && !isNaN(newInputAmount)) {
+        elmToChange.name = newInputName;
+        elmToChange.value = newInputAmount;
         elementContainer.removeChild(changeInputName);
         elementContainer.removeChild(changeInputAmount);
         elementContainer.removeChild(changeAcceptBtn);
-        renderIncomes(incomeList, array);
+        renderInputList(list, array);
         calculate(array);
+        bilans();
       }
     });
   });
   return changeBtn;
 };
+
+//dots
+
+// const hidePartList = (array) => {
+//   if (array.length > 4) {
+//     for (let i = 5; i <= array.length; i++) {
+//       console.log(array[i]);
+//       const { id } = array[i];
+//       const elementContainer = document.querySelector(`container-${id}`);
+//       elementContainer.classList.add("hidden");
+//     }
+//   }
+// };
 
 //UPDATE
 //funkcja sumująca
@@ -134,31 +156,54 @@ const calculate = (array) => {
     return item.value;
   });
 
-  const sumIncome = numberArray.reduce((acc, number) => {
+  const sumInput = numberArray.reduce((acc, number) => {
     return acc + number;
   }, 0);
-  incomeSumInfo.textContent = `${sumIncome.toFixed(2)} zł`;
+
+  if (array === incomes) {
+    incomeSumInfo.textContent = `${sumInput.toFixed(2)} zł`;
+  } else if (array === expenses) {
+    expenseSumInfo.textContent = `${sumInput.toFixed(2)} zł`;
+  }
+  return sumInput;
+};
+
+const bilans = () => {
+  const incomesSum = calculate(incomes);
+  const expensesSum = calculate(expenses);
+  const result = parseFloat(incomesSum - expensesSum);
+  if (incomesSum > expensesSum) {
+    announcement.textContent = `Możesz jeszcze wydać ${result} złotych`;
+  } else if (incomesSum < expensesSum) {
+    announcement.textContent = `Bilans jest ujemny. Jesteś na minusie ${result} złotych`;
+  } else {
+    announcement.textContent = "Bilans wynosi 0";
+  }
 };
 
 //funkcja tworząca element na liście:
 //universal
-const createListElement = (item, array) => {
+const createListElement = (item, list, array) => {
   let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
-  const deleteBtn = createDeleteBtnIncome(item.id, array);
-  const changeBtn = createChangeBtn(item.id, array);
+  const deleteBtn = createDeleteBtn(item.id, array);
+  const changeBtn = createChangeBtn(item.id, list, array);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
   const elementContainer = createTextBtnContainer(li, btnWrapper, item.id);
-  incomeList.appendChild(elementContainer);
+  if (array === incomes) {
+    incomeList.appendChild(elementContainer);
+  } else if (array === expenses) {
+    expenseList.appendChild(elementContainer);
+  }
 };
 
-//funkcja renderująca input income
 //universal
-const renderIncomes = (list, array) => {
+const renderInputList = (list, array) => {
   list.innerHTML = "";
   array.forEach((item) => {
-    createListElement(item, array);
+    createListElement(item, list, array);
+    hidePartList(array);
   });
 };
 
@@ -174,24 +219,40 @@ const addIncome = () => {
       value: incomeInputAmount,
       id: uuidv4(),
     });
-    renderIncomes(incomeList, incomes);
+    renderInputList(incomeList, incomes);
     calculate(incomes);
+    bilans();
   }
   incomeInput.value = "";
   amountIncomeInput.value = "";
 };
 
 //funckja umozliwiająca dodawania do listy expense
+const addExpense = () => {
+  let expenseInputName = expenseInput.value;
+  let expenseInputAmount = amountExpenseInput.value;
+  expenseInputAmount = parseFloat(expenseInputAmount);
 
-//funckja startująca dla aplikacji
-const renderApp = () => {
-  addIncome();
+  if (expenseInputName && !isNaN(expenseInputAmount)) {
+    expenses.push({
+      name: expenseInputName,
+      value: expenseInputAmount,
+      id: uuidv4(),
+    });
+    renderInputList(expenseList, expenses);
+    calculate(expenses);
+    bilans();
+  }
+  expenseInput.value = "";
+  amountExpenseInput.value = "";
 };
 
-//EVENTY
-//START APP
+//EVENTY/START APP
 document.addEventListener("DOMContentLoaded", function () {
   incomeAddButton.addEventListener("click", function () {
-    renderApp();
+    addIncome();
+  });
+  expenseAddButton.addEventListener("click", function () {
+    addExpense();
   });
 });
