@@ -136,17 +136,33 @@ const createChangeBtn = (id, list, array) => {
 };
 
 //dots
+const hidePartList = (list, array) => {
+  if (array.length > 2) {
+    for (let i = 2; i < array.length; i++) {
+      const idItem = array[i].id;
+      const elementContainer = document.querySelector(`#container-${idItem}`);
+      elementContainer.classList.add("hidden");
+    }
+    // const container = document.querySelector(id);
+    if (!list.querySelector("#dots-img")) {
+      const seeMoreElm = document.createElement("button");
+      seeMoreElm.classList.add("dots-img");
+      seeMoreElm.id = "dots-img";
+      seeMoreElm.setAttribute("type", "button");
+      list.appendChild(seeMoreElm);
 
-// const hidePartList = (array) => {
-//   if (array.length > 4) {
-//     for (let i = 5; i <= array.length; i++) {
-//       console.log(array[i]);
-//       const { id } = array[i];
-//       const elementContainer = document.querySelector(`container-${id}`);
-//       elementContainer.classList.add("hidden");
-//     }
-//   }
-// };
+      seeMoreElm.addEventListener("click", () => {
+        for (let i = 2; i < array.length; i++) {
+          const idItem = array[i].id;
+          const elementContainer = document.querySelector(
+            `#container-${idItem}`
+          );
+          elementContainer.classList.toggle("hidden");
+        }
+      });
+    }
+  }
+};
 
 //UPDATE
 //funkcja sumująca
@@ -171,7 +187,7 @@ const calculate = (array) => {
 const bilans = () => {
   const incomesSum = calculate(incomes);
   const expensesSum = calculate(expenses);
-  const result = parseFloat(incomesSum - expensesSum);
+  const result = parseFloat(incomesSum - expensesSum).toFixed(2);
   if (incomesSum > expensesSum) {
     announcement.textContent = `Możesz jeszcze wydać ${result} złotych`;
   } else if (incomesSum < expensesSum) {
@@ -199,12 +215,12 @@ const createListElement = (item, list, array) => {
 };
 
 //universal
-const renderInputList = (list, array) => {
+const renderInputList = (list, array, name) => {
   list.innerHTML = "";
   array.forEach((item) => {
     createListElement(item, list, array);
-    hidePartList(array);
   });
+  hidePartList(list, array);
 };
 
 //funckja umozliwiająca dodawania do listy income
@@ -219,9 +235,10 @@ const addIncome = () => {
       value: incomeInputAmount,
       id: uuidv4(),
     });
-    renderInputList(incomeList, incomes);
+    renderInputList(incomeList, incomes, `income`);
     calculate(incomes);
     bilans();
+    // hidePartList(incomes, "#income-list-container");
   }
   incomeInput.value = "";
   amountIncomeInput.value = "";
@@ -239,9 +256,10 @@ const addExpense = () => {
       value: expenseInputAmount,
       id: uuidv4(),
     });
-    renderInputList(expenseList, expenses);
+    renderInputList(expenseList, expenses, `expense`);
     calculate(expenses);
     bilans();
+    // hidePartList(expenses, "#expense-list-container");
   }
   expenseInput.value = "";
   amountExpenseInput.value = "";

@@ -114,7 +114,6 @@ body {
 }
 
 /* income/outcome sections */
-
 .income-expanse-container {
   margin: 0 auto;
   display: flex;
@@ -129,8 +128,6 @@ body {
 .expense-container {
   background-color: var(--era);
   width: 300px;
-  max-height: 350px;
-  /* 250 */
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding: 10px 20px;
@@ -172,6 +169,7 @@ body {
   background-color: var(--vining-ivy);
   border: none;
   border-radius: 25px;
+  cursor: pointer;
 }
 /* list of items - to js */
 .list-container {
@@ -194,7 +192,17 @@ body {
   justify-content: space-between;
 }
 
-.income-item {
+.dots-img {
+  margin-top: 15px;
+  margin-left: -15px;
+  background-image: url(assets/image/Dots.svg);
+  background-color: var(--era);
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 20px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .hidden {
@@ -219,6 +227,7 @@ body {
   background-color: var(--backery-box);
   color: var(--vining-ivy);
   font-size: 12px;
+  cursor: pointer;
 }
 
 .input:focus {
@@ -233,7 +242,7 @@ body {
   color: var(--white);
   background-color: var(--opulent-orange);
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -243,19 +252,6 @@ body {
 .sum {
   padding: 10px;
 }
-
-/* arrows */
-/* .side-to-side-btn-wrapper {
-  margin-top: 10px;
-  display: flex;
-  justify-content: end;
-  gap: 10px;
-}
-.right-left-btn {
-  background-color: var(--backery-box);
-  border: none;
-  cursor: pointer;
-} */
 
 /* footer */
 .app-footer {
@@ -274,20 +270,18 @@ body {
 .fb-insta-logo-container {
   display: flex;
   justify-content: space-between;
+  align-content: center;
   align-items: center;
   gap: 10px;
 }
 
 .footer-icon-btn {
-  width: 30px;
-  aspect-ratio: 1;
+  width: 28px;
+  height: 30px;
+  align-items: center;
   background-color: var(--vining-ivy);
   color: var(--white);
   border: none;
   border-radius: 50%;
   cursor: pointer;
 }
-
-/* TODO guzik z miesiącem do poprawy */
-/* TODO ikony za małe */
-/* TODO dodać cursor na butonie i animacje butonów */
