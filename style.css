@@ -131,6 +131,8 @@ body {
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .list-title {
@@ -277,11 +279,144 @@ body {
 
 .footer-icon-btn {
   width: 28px;
-  height: 30px;
+  height: 28px;
   align-items: center;
   background-color: var(--vining-ivy);
   color: var(--white);
   border: none;
   border-radius: 50%;
   cursor: pointer;
+}
+/*  */
+/*  */
+@media screen and (min-width: 768px) {
+  .page-container {
+    width: 760px;
+    min-height: 100vh;
+  }
+
+  .app-header {
+    width: 100%;
+  }
+
+  .welcome-container {
+    width: 100%;
+  }
+
+  .welcome-title {
+    font-size: 21px;
+  }
+
+  .announcement {
+    font-size: 18px;
+  }
+
+  .income-expanse-container {
+    flex-direction: row;
+    align-items: start;
+    gap: 40px;
+  }
+
+  .income-container,
+  .expense-container {
+    margin-top: -120px;
+  }
+}
+/*  */
+/*  */
+@media screen and (min-width: 992px) {
+  .page-container {
+    width: auto;
+  }
+
+  .app-header {
+    padding: 20px 40px;
+  }
+
+  .welcome-container {
+    width: 100%;
+    height: 350px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 80px;
+    border-bottom-right-radius: 80px;
+  }
+
+  .welcome-text-wrapper {
+    padding: 20px 40px;
+  }
+
+  .welcome-title {
+    font-size: 24px;
+    margin: 0 auto;
+  }
+  .month-info-btn {
+    min-width: 180px;
+    height: 50px;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .announcement {
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+  .income-expanse-container {
+    flex-direction: row;
+    gap: 120px;
+    height: auto;
+  }
+
+  .income-container,
+  .expense-container {
+    margin-top: -160px;
+    width: 400px;
+  }
+
+  .income-expense-header-container {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .name-input {
+    max-width: 220px;
+  }
+  .amount-input {
+    max-width: 100px;
+  }
+
+  .list-items {
+    font-size: 15px;
+  }
+
+  .input-btn-container {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .btn-wrapper {
+    display: flex;
+    gap: 8px;
+  }
+
+  .change-btn,
+  .delete-btn,
+  .change-accept-btn {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .sum-container {
+    margin-top: 15px;
+  }
+
+  .app-footer {
+    padding: 20px 40px;
+  }
+  .company-name {
+    font-size: 16px;
+  }
 }

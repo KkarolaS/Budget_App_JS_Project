@@ -130,8 +130,8 @@ const createChangeBtn = (id, list, array) => {
 };
 
 const hidePartList = (list, array) => {
-  if (array.length > 2) {
-    for (let i = 2; i < array.length; i++) {
+  if (array.length > 5) {
+    for (let i = 5; i < array.length; i++) {
       const idItem = array[i].id;
       const elementContainer = document.querySelector(`#container-${idItem}`);
       elementContainer.classList.add("hidden");
@@ -143,7 +143,7 @@ const hidePartList = (list, array) => {
       seeMoreElm.setAttribute("type", "button");
       list.appendChild(seeMoreElm);
       seeMoreElm.addEventListener("click", () => {
-        for (let i = 2; i < array.length; i++) {
+        for (let i = 5; i < array.length; i++) {
           const idItem = array[i].id;
           const elementContainer = document.querySelector(
             `#container-${idItem}`
