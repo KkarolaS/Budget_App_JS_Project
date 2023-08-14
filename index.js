@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 //MODEL BUDGET APP
 let incomes = [];
-
 let expenses = [];
 
 //VIEW
@@ -20,7 +19,6 @@ const expenseSumInfo = document.querySelector("#expense-sum");
 
 const announcement = document.querySelector("#announcement");
 
-//universal
 const createInputElement = (value, classIdName) => {
   const inputItem = document.createElement("li");
   inputItem.classList.add(classIdName);
@@ -28,7 +26,7 @@ const createInputElement = (value, classIdName) => {
   inputItem.textContent = value;
   return inputItem;
 };
-//universal
+
 const createBtnWrapper = (changeBtn, deleteBtn) => {
   const btnWrapper = document.createElement("div");
   btnWrapper.id = "btn-wrapper";
@@ -37,7 +35,7 @@ const createBtnWrapper = (changeBtn, deleteBtn) => {
   btnWrapper.appendChild(deleteBtn);
   return btnWrapper;
 };
-//universal
+
 const createTextBtnContainer = (item, btnWrapper, id) => {
   const inputBtnContainer = document.createElement("div");
   inputBtnContainer.id = `container-${id}`;
@@ -47,7 +45,6 @@ const createTextBtnContainer = (item, btnWrapper, id) => {
   return inputBtnContainer;
 };
 
-//universal
 const createChangeElement = (elementName, typeName, inputName) => {
   const changeInputName = document.createElement(elementName);
   changeInputName.classList.add("input", "change-input");
@@ -56,7 +53,6 @@ const createChangeElement = (elementName, typeName, inputName) => {
   return changeInputName;
 };
 
-//universal
 const createAcceptChangeBtn = (id) => {
   const changeAcceptBtn = document.createElement("button");
   changeAcceptBtn.classList.add("change-accept-btn", "add-btn");
@@ -64,13 +60,12 @@ const createAcceptChangeBtn = (id) => {
   changeAcceptBtn.textContent = "Zapisz";
   return changeAcceptBtn;
 };
-// universal
+
 const createDeleteBtn = (id, array) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
   deleteBtn.id = `delete-btn-${id}`;
   deleteBtn.textContent = "Usuń";
-
   deleteBtn.addEventListener("click", () => {
     if (array === incomes) {
       incomes = incomes.filter((item) => item.id !== id);
@@ -85,13 +80,12 @@ const createDeleteBtn = (id, array) => {
   });
   return deleteBtn;
 };
-//universal
+
 const createChangeBtn = (id, list, array) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
   changeBtn.textContent = "Zmień";
-
   changeBtn.addEventListener("click", () => {
     const elmList = document.querySelector(`#li-${id}`);
     const deleteElmBtn = document.querySelector(`#delete-btn-${id}`);
@@ -135,7 +129,6 @@ const createChangeBtn = (id, list, array) => {
   return changeBtn;
 };
 
-//dots
 const hidePartList = (list, array) => {
   if (array.length > 2) {
     for (let i = 2; i < array.length; i++) {
@@ -143,14 +136,12 @@ const hidePartList = (list, array) => {
       const elementContainer = document.querySelector(`#container-${idItem}`);
       elementContainer.classList.add("hidden");
     }
-    // const container = document.querySelector(id);
     if (!list.querySelector("#dots-img")) {
       const seeMoreElm = document.createElement("button");
       seeMoreElm.classList.add("dots-img");
       seeMoreElm.id = "dots-img";
       seeMoreElm.setAttribute("type", "button");
       list.appendChild(seeMoreElm);
-
       seeMoreElm.addEventListener("click", () => {
         for (let i = 2; i < array.length; i++) {
           const idItem = array[i].id;
@@ -165,17 +156,13 @@ const hidePartList = (list, array) => {
 };
 
 //UPDATE
-//funkcja sumująca
-//universal
 const calculate = (array) => {
   const numberArray = array.map((item) => {
     return item.value;
   });
-
   const sumInput = numberArray.reduce((acc, number) => {
     return acc + number;
   }, 0);
-
   if (array === incomes) {
     incomeSumInfo.textContent = `${sumInput.toFixed(2)} zł`;
   } else if (array === expenses) {
@@ -197,8 +184,6 @@ const bilans = () => {
   }
 };
 
-//funkcja tworząca element na liście:
-//universal
 const createListElement = (item, list, array) => {
   let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
@@ -214,7 +199,6 @@ const createListElement = (item, list, array) => {
   }
 };
 
-//universal
 const renderInputList = (list, array, name) => {
   list.innerHTML = "";
   array.forEach((item) => {
@@ -223,12 +207,10 @@ const renderInputList = (list, array, name) => {
   hidePartList(list, array);
 };
 
-//funckja umozliwiająca dodawania do listy income
 const addIncome = () => {
   let incomeInputName = incomeInput.value;
   let incomeInputAmount = amountIncomeInput.value;
   incomeInputAmount = parseFloat(incomeInputAmount);
-
   if (incomeInputName && !isNaN(incomeInputAmount)) {
     incomes.push({
       name: incomeInputName,
@@ -238,13 +220,11 @@ const addIncome = () => {
     renderInputList(incomeList, incomes, `income`);
     calculate(incomes);
     bilans();
-    // hidePartList(incomes, "#income-list-container");
   }
   incomeInput.value = "";
   amountIncomeInput.value = "";
 };
 
-//funckja umozliwiająca dodawania do listy expense
 const addExpense = () => {
   let expenseInputName = expenseInput.value;
   let expenseInputAmount = amountExpenseInput.value;
@@ -259,7 +239,6 @@ const addExpense = () => {
     renderInputList(expenseList, expenses, `expense`);
     calculate(expenses);
     bilans();
-    // hidePartList(expenses, "#expense-list-container");
   }
   expenseInput.value = "";
   amountExpenseInput.value = "";
@@ -267,6 +246,10 @@ const addExpense = () => {
 
 //EVENTY/START APP
 document.addEventListener("DOMContentLoaded", function () {
+  let monthInfo = document.querySelector(".month-info-btn");
+  const monthName = prompt("Wpisz miesiąc i rok przychodów i wydatków");
+  monthInfo.textContent = monthName;
+
   incomeAddButton.addEventListener("click", function () {
     addIncome();
   });
