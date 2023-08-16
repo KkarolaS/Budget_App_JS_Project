@@ -82,7 +82,7 @@ const createDeleteBtn = (id, array) => {
   return deleteBtn;
 };
 
-const createChangeBtn = (id, list, array) => {
+const createChangeBtn = (id, list, array, name) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
@@ -116,14 +116,20 @@ const createChangeBtn = (id, list, array) => {
       const newInputName = changeInputName.value;
       const newInputAmount = parseFloat(changeInputAmount.value);
       if (newInputName && !isNaN(newInputAmount)) {
-        elmToChange.name = newInputName;
-        elmToChange.value = newInputAmount;
-        elementContainer.removeChild(changeInputName);
-        elementContainer.removeChild(changeInputAmount);
-        elementContainer.removeChild(changeAcceptBtn);
-        renderInputList(list, array);
-        calculate(array);
-        bilans();
+        if (newInputAmount > 0) {
+          elmToChange.name = newInputName;
+          elmToChange.value = newInputAmount;
+          elementContainer.removeChild(changeInputName);
+          elementContainer.removeChild(changeInputAmount);
+          elementContainer.removeChild(changeAcceptBtn);
+          renderInputList(list, array);
+          calculate(array);
+          bilans();
+        } else {
+          alert("Kwota musi być większa niż 0");
+        }
+      } else {
+        alert(`Wpisz nazwę i kwotę ${name}`);
       }
     });
   });
@@ -185,11 +191,11 @@ const bilans = () => {
   }
 };
 
-const createListElement = (item, list, array) => {
+const createListElement = (item, list, array, name) => {
   const fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
   const deleteBtn = createDeleteBtn(item.id, array);
-  const changeBtn = createChangeBtn(item.id, list, array);
+  const changeBtn = createChangeBtn(item.id, list, array, name);
 
   const btnWrapper = createBtnWrapper(changeBtn, deleteBtn);
   const elementContainer = createTextBtnContainer(li, btnWrapper, item.id);
@@ -203,7 +209,7 @@ const createListElement = (item, list, array) => {
 const renderInputList = (list, array, name) => {
   list.innerHTML = "";
   array.forEach((item) => {
-    createListElement(item, list, array);
+    createListElement(item, list, array, name);
   });
   hidePartList(list, array);
 };
@@ -213,15 +219,22 @@ const addIncome = () => {
   let incomeInputAmount = amountIncomeInput.value;
   incomeInputAmount = parseFloat(incomeInputAmount);
   if (incomeInputName && !isNaN(incomeInputAmount)) {
-    incomes.push({
-      name: incomeInputName,
-      value: incomeInputAmount,
-      id: uuidv4(),
-    });
-    renderInputList(incomeList, incomes, `income`);
-    calculate(incomes);
-    bilans();
+    if (incomeInputAmount > 0) {
+      incomes.push({
+        name: incomeInputName,
+        value: incomeInputAmount,
+        id: uuidv4(),
+      });
+      renderInputList(incomeList, incomes, "przychodu");
+      calculate(incomes);
+      bilans();
+    } else {
+      alert("Kwota powinna być większa niż 0");
+    }
+  } else {
+    alert("Wpisz nazwę i kwotę przychodu");
   }
+
   incomeInput.value = "";
   amountIncomeInput.value = "";
 };
@@ -230,16 +243,21 @@ const addExpense = () => {
   const expenseInputName = expenseInput.value;
   let expenseInputAmount = amountExpenseInput.value;
   expenseInputAmount = parseFloat(expenseInputAmount);
-
   if (expenseInputName && !isNaN(expenseInputAmount)) {
-    expenses.push({
-      name: expenseInputName,
-      value: expenseInputAmount,
-      id: uuidv4(),
-    });
-    renderInputList(expenseList, expenses, `expense`);
-    calculate(expenses);
-    bilans();
+    if (expenseInputAmount > 0) {
+      expenses.push({
+        name: expenseInputName,
+        value: expenseInputAmount,
+        id: uuidv4(),
+      });
+      renderInputList(expenseList, expenses, "wydatku");
+      calculate(expenses);
+      bilans();
+    } else {
+      alert("Kwota powinna być większa niż 0");
+    }
+  } else {
+    alert("Wpisz nazwę i kwotę wydatku");
   }
   expenseInput.value = "";
   amountExpenseInput.value = "";
