@@ -18,6 +18,7 @@ const expenseAddButton = document.querySelector("#expense-add-button");
 const expenseSumInfo = document.querySelector("#expense-sum");
 
 const announcement = document.querySelector("#announcement");
+const monthInfo = document.querySelector(".month-info-btn");
 
 const createInputElement = (value, classIdName) => {
   const inputItem = document.createElement("li");
@@ -185,7 +186,7 @@ const bilans = () => {
 };
 
 const createListElement = (item, list, array) => {
-  let fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
+  const fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
   const deleteBtn = createDeleteBtn(item.id, array);
   const changeBtn = createChangeBtn(item.id, list, array);
@@ -208,7 +209,7 @@ const renderInputList = (list, array, name) => {
 };
 
 const addIncome = () => {
-  let incomeInputName = incomeInput.value;
+  const incomeInputName = incomeInput.value;
   let incomeInputAmount = amountIncomeInput.value;
   incomeInputAmount = parseFloat(incomeInputAmount);
   if (incomeInputName && !isNaN(incomeInputAmount)) {
@@ -226,7 +227,7 @@ const addIncome = () => {
 };
 
 const addExpense = () => {
-  let expenseInputName = expenseInput.value;
+  const expenseInputName = expenseInput.value;
   let expenseInputAmount = amountExpenseInput.value;
   expenseInputAmount = parseFloat(expenseInputAmount);
 
@@ -246,14 +247,24 @@ const addExpense = () => {
 
 //EVENTY/START APP
 document.addEventListener("DOMContentLoaded", function () {
-  let monthInfo = document.querySelector(".month-info-btn");
   const monthName = prompt("Wpisz miesiąc i rok przychodów i wydatków");
-  monthInfo.textContent = monthName;
+  if (monthName !== "" && monthName !== null) {
+    monthInfo.textContent = monthName;
+  } else {
+    monthInfo.textContent = "Bieżący miesiąc";
+  }
 
   incomeAddButton.addEventListener("click", function () {
     addIncome();
   });
   expenseAddButton.addEventListener("click", function () {
     addExpense();
+  });
+
+  monthInfo.addEventListener("click", function () {
+    const monthName = prompt(
+      "Wpisz nowy miesiąc lub rok przychodów i wydatków"
+    );
+    monthInfo.textContent = monthName;
   });
 });

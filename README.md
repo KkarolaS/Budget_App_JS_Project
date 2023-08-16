@@ -27,4 +27,4 @@ budget-app-caroline.netlify.app
 
 ## Authors and acknowledgment
 
-The project is a part of Bootcamp HTML&CSS with Future Collars and I'd not be here without all Mentors they're helping me during the learning process.
+The project is a part of Bootcamp JS with Future Collars and I'd not be here without all Mentors they're helping me during the learning process.
