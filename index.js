@@ -136,18 +136,19 @@ const createChangeBtn = (id, list, array, name) => {
   return changeBtn;
 };
 
-const hidePartList = (list, array) => {
+const hidePartList = (list, array, listName) => {
   if (array.length > 5) {
     for (let i = 5; i < array.length; i++) {
       const idItem = array[i].id;
       const elementContainer = document.querySelector(`#container-${idItem}`);
       elementContainer.classList.add("hidden");
     }
-    if (!list.querySelector("#dots-img")) {
+    if (!list.querySelector("#see-more-btn")) {
       const seeMoreElm = document.createElement("button");
-      seeMoreElm.classList.add("dots-img");
-      seeMoreElm.id = "dots-img";
+      seeMoreElm.classList.add("see-more-btn");
+      seeMoreElm.id = `see-more-btn-${listName}`;
       seeMoreElm.setAttribute("type", "button");
+      seeMoreElm.textContent = "Show more";
       list.appendChild(seeMoreElm);
       seeMoreElm.addEventListener("click", () => {
         for (let i = 5; i < array.length; i++) {
@@ -156,6 +157,11 @@ const hidePartList = (list, array) => {
             `#container-${idItem}`
           );
           elementContainer.classList.toggle("hidden");
+          if (seeMoreElm.textContent === "Show more") {
+            seeMoreElm.textContent = "Show less";
+          } else if (seeMoreElm.textContent === "Show less") {
+            seeMoreElm.textContent = "Show more";
+          }
         }
       });
     }
@@ -206,12 +212,12 @@ const createListElement = (item, list, array, name) => {
   }
 };
 
-const renderInputList = (list, array, name) => {
+const renderInputList = (list, array, name, listName) => {
   list.innerHTML = "";
   array.forEach((item) => {
     createListElement(item, list, array, name);
   });
-  hidePartList(list, array);
+  hidePartList(list, array, listName);
 };
 
 const addIncome = () => {
@@ -225,7 +231,7 @@ const addIncome = () => {
         value: incomeInputAmount,
         id: uuidv4(),
       });
-      renderInputList(incomeList, incomes, "przychodu");
+      renderInputList(incomeList, incomes, "przychodu", "incomeList");
       calculate(incomes);
       bilans();
     } else {
@@ -250,7 +256,7 @@ const addExpense = () => {
         value: expenseInputAmount,
         id: uuidv4(),
       });
-      renderInputList(expenseList, expenses, "wydatku");
+      renderInputList(expenseList, expenses, "wydatku", "expenseList");
       calculate(expenses);
       bilans();
     } else {
@@ -263,14 +269,18 @@ const addExpense = () => {
   amountExpenseInput.value = "";
 };
 
-//EVENTY/START APP
-document.addEventListener("DOMContentLoaded", function () {
+const monthName = () => {
   const monthName = prompt("Wpisz miesiąc i rok przychodów i wydatków");
   if (monthName !== "" && monthName !== null) {
     monthInfo.textContent = monthName;
   } else {
     monthInfo.textContent = "Bieżący miesiąc";
   }
+};
+
+//EVENTY/START APP
+document.addEventListener("DOMContentLoaded", function () {
+  monthName();
 
   incomeAddButton.addEventListener("click", function () {
     addIncome();
@@ -280,9 +290,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   monthInfo.addEventListener("click", function () {
-    const monthName = prompt(
-      "Wpisz nowy miesiąc lub rok przychodów i wydatków"
-    );
-    monthInfo.textContent = monthName;
+    monthName();
   });
 });
