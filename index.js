@@ -222,8 +222,7 @@ const renderInputList = (list, array, name, listName) => {
 
 const addIncome = () => {
   const incomeInputName = incomeInput.value;
-  let incomeInputAmount = amountIncomeInput.value;
-  incomeInputAmount = parseFloat(incomeInputAmount);
+  const incomeInputAmount = parseFloat(amountIncomeInput.value);
   if (incomeInputName && !isNaN(incomeInputAmount)) {
     if (incomeInputAmount > 0) {
       incomes.push({
@@ -247,8 +246,7 @@ const addIncome = () => {
 
 const addExpense = () => {
   const expenseInputName = expenseInput.value;
-  let expenseInputAmount = amountExpenseInput.value;
-  expenseInputAmount = parseFloat(expenseInputAmount);
+  const expenseInputAmount = parseFloat(amountExpenseInput.value);
   if (expenseInputName && !isNaN(expenseInputAmount)) {
     if (expenseInputAmount > 0) {
       expenses.push({
