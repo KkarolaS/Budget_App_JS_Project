@@ -86,7 +86,7 @@ body {
 .welcome-title {
   font-family: Arial, Helvetica, sans-serif;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 35px;
 }
 .month-info-btn {
   font-family: Arial, Helvetica, sans-serif;
@@ -166,7 +166,7 @@ body {
 }
 .add-btn {
   color: var(--backery-box);
-  background-color: var(--vining-ivy);
+  background-color: var(--opulent-orange);
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -198,11 +198,11 @@ body {
   margin-top: 10px;
   margin-left: -15px;
   font-size: 12px;
-  color: var(--vining-ivy);
+  color: var(--backery-box);
   text-align: center;
-  background-color: var(--era);
+  background-color: var(--opulent-orange);
   box-shadow: 1px 3px 5px rgb(139, 139, 146);
-  border: 1px solid var(--vining-ivy);
+  border: 1px solid var(--backery-box);
   border-radius: 20px;
   cursor: pointer;
   transition: transfor 0.5s ease;
@@ -233,8 +233,8 @@ body {
 .change-btn,
 .delete-btn,
 .change-accept-btn {
-  background-color: var(--backery-box);
-  color: var(--vining-ivy);
+  background-color: var(--opulent-orange);
+  color: var(--backery-box);
   font-size: 12px;
   cursor: pointer;
 }
@@ -249,7 +249,7 @@ body {
   font-size: 16px;
   font-weight: 400;
   color: var(--white);
-  background-color: var(--opulent-orange);
+  background-color: var(--vining-ivy);
   border-radius: 10px;
   margin-top: 5px;
   display: flex;
@@ -266,6 +266,7 @@ body {
 .app-footer {
   height: 50px;
   margin-top: auto;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -285,15 +286,18 @@ body {
 }
 
 .footer-icon-btn {
-  width: 28px;
-  height: 28px;
-  align-items: center;
-  background-color: var(--vining-ivy);
+  width: 35px;
+  height: 35px;
+  background-color: var(--opulent-orange);
   color: var(--white);
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 /*  */
 /*  */
 @media screen and (min-width: 768px) {
