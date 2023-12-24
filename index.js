@@ -18,6 +18,7 @@ const expenseAddButton = document.querySelector("#expense-add-button");
 const expenseSumInfo = document.querySelector("#expense-sum");
 
 const announcement = document.querySelector("#announcement");
+const errorInfo = document.querySelector("#errors-info");
 const monthInfo = document.querySelector(".month-info-btn");
 
 const createInputElement = (value, classIdName) => {
@@ -58,7 +59,7 @@ const createAcceptChangeBtn = (id) => {
   const changeAcceptBtn = document.createElement("button");
   changeAcceptBtn.classList.add("change-accept-btn", "add-btn");
   changeAcceptBtn.id = `change-accept-btn-${id}`;
-  changeAcceptBtn.textContent = "Zapisz";
+  changeAcceptBtn.textContent = "Save";
   return changeAcceptBtn;
 };
 
@@ -66,7 +67,7 @@ const createDeleteBtn = (id, array) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn", "add-btn");
   deleteBtn.id = `delete-btn-${id}`;
-  deleteBtn.textContent = "Usuń";
+  deleteBtn.textContent = "Delete";
   deleteBtn.addEventListener("click", () => {
     if (array === incomes) {
       incomes = incomes.filter((item) => item.id !== id);
@@ -86,7 +87,7 @@ const createChangeBtn = (id, list, array, name) => {
   const changeBtn = document.createElement("button");
   changeBtn.classList.add("change-btn", "add-btn");
   changeBtn.id = "change-btn";
-  changeBtn.textContent = "Zmień";
+  changeBtn.textContent = "Edit";
   changeBtn.addEventListener("click", () => {
     const elmList = document.querySelector(`#li-${id}`);
     const deleteElmBtn = document.querySelector(`#delete-btn-${id}`);
@@ -126,10 +127,10 @@ const createChangeBtn = (id, list, array, name) => {
           calculate(array);
           bilans();
         } else {
-          alert("Kwota musi być większa niż 0");
+          alert("The amount must be greater than 0");
         }
       } else {
-        alert(`Wpisz nazwę i kwotę ${name}`);
+        alert(`Enter the name and amount ${name}`);
       }
     });
   });
@@ -177,9 +178,9 @@ const calculate = (array) => {
     return acc + number;
   }, 0);
   if (array === incomes) {
-    incomeSumInfo.textContent = `${sumInput.toFixed(2)} zł`;
+    incomeSumInfo.textContent = `${sumInput.toFixed(2)} EUR`;
   } else if (array === expenses) {
-    expenseSumInfo.textContent = `${sumInput.toFixed(2)} zł`;
+    expenseSumInfo.textContent = `${sumInput.toFixed(2)} EUR`;
   }
   return sumInput;
 };
@@ -189,16 +190,17 @@ const bilans = () => {
   const expensesSum = calculate(expenses);
   const result = parseFloat(incomesSum - expensesSum).toFixed(2);
   if (incomesSum > expensesSum) {
-    announcement.textContent = `Możesz jeszcze wydać ${result} złotych`;
+    announcement.textContent = `You can still spend ${result} EUR`;
   } else if (incomesSum < expensesSum) {
-    announcement.textContent = `Bilans jest ujemny. Jesteś na minusie ${result} złotych`;
+    announcement.textContent = `The balance is negative. You are at a deficit of ${result} EUR`;
   } else {
-    announcement.textContent = "Bilans wynosi 0";
+    announcement.textContent = "The balance is O";
   }
+  errorInfo.textContent = "";
 };
 
 const createListElement = (item, list, array, name) => {
-  const fullItemName = `${item.name} - ${item.value.toFixed(2)} zł`;
+  const fullItemName = `${item.name} - ${item.value.toFixed(2)} EUR`;
   const li = createInputElement(fullItemName, `li-${item.id}`);
   const deleteBtn = createDeleteBtn(item.id, array);
   const changeBtn = createChangeBtn(item.id, list, array, name);
@@ -230,14 +232,14 @@ const addIncome = () => {
         value: incomeInputAmount,
         id: uuidv4(),
       });
-      renderInputList(incomeList, incomes, "przychodu", "incomeList");
+      renderInputList(incomeList, incomes, "income", "incomeList");
       calculate(incomes);
       bilans();
     } else {
-      alert("Kwota powinna być większa niż 0");
+      errorInfo.textContent = "The amount must be greater than 0";
     }
   } else {
-    alert("Wpisz nazwę i kwotę przychodu");
+    errorInfo.textContent = "Enter the name and amount of an income";
   }
 
   incomeInput.value = "";
@@ -254,25 +256,25 @@ const addExpense = () => {
         value: expenseInputAmount,
         id: uuidv4(),
       });
-      renderInputList(expenseList, expenses, "wydatku", "expenseList");
+      renderInputList(expenseList, expenses, "expense", "expenseList");
       calculate(expenses);
       bilans();
     } else {
-      alert("Kwota powinna być większa niż 0");
+      errorInfo.textContent = "The amount must be greater than 0";
     }
   } else {
-    alert("Wpisz nazwę i kwotę wydatku");
+    errorInfo.textContent = "Enter the name and amount of an expense";
   }
   expenseInput.value = "";
   amountExpenseInput.value = "";
 };
 
 const monthName = () => {
-  const monthName = prompt("Wpisz miesiąc i rok przychodów i wydatków");
+  const monthName = prompt("Enter the month and year of incomes and expenses");
   if (monthName !== "" && monthName !== null) {
     monthInfo.textContent = monthName;
   } else {
-    monthInfo.textContent = "Bieżący miesiąc";
+    monthInfo.textContent = "Current month";
   }
 };
 

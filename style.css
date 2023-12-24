@@ -108,6 +108,9 @@ body {
   font-size: 15px;
 }
 
+.errors-info {
+  color: var(--opulent-orange);
+}
 /* income/outcome sections */
 .income-expanse-container {
   margin: 0 auto;

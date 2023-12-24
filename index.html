@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,76 +17,77 @@
         />
         <div class="header-text-wrapper">
           <h1 class="header-title">Budget App</h1>
-          <h3 class="header-subtitle">i masz wszystko pod kontrolą</h3>
+          <h3 class="header-subtitle">and you have everything under control</h3>
         </div>
       </header>
 
       <section class="welcome-container">
         <div class="welcome-text-wrapper">
-          <h2 class="welcome-title">Witaj w swoim domowym budżecie !</h2>
-          <button class="month-info-btn">Sierpień 2023</button>
+          <h2 class="welcome-title">Welcome in your home budget!</h2>
+          <button class="month-info-btn">Current month</button>
           <p class="announcement" id="announcement">
-            Wprowadź swój pierwszy przychód lub wydatek. Bilans wynosi 0.
+            Enter your first income or expense. The balance is 0.
           </p>
+          <p class="announcement errors-info" id="errors-info"></p>
         </div>
       </section>
 
       <section class="income-expanse-container">
         <section class="income-container">
-          <h3 class="list-title">Przychód</h3>
+          <h3 class="list-title">Income</h3>
           <div class="income-expense-header-container">
             <input
               type="text"
-              placeholder="Nazwa przychodu"
+              placeholder="Income name"
               class="name-input input"
               id="income-name-input"
             />
             <input
               type="number"
-              placeholder="Kwota"
+              placeholder="Amount"
               class="amount-input input"
               id="amount-income-input"
             />
-            <button class="add-btn" id="income-add-button">Dodaj</button>
+            <button class="add-btn" id="income-add-button">Add</button>
           </div>
           <div class="list-container" id="income-list-container">
             <ul class="list-items" id="income-list"></ul>
           </div>
           <div class="sum-container">
-            <p class="sum-title">Suma przychodów:</p>
-            <p class="sum" id="income-sum">0 zł</p>
+            <p class="sum-title">Total income:</p>
+            <p class="sum" id="income-sum">0 eur</p>
           </div>
         </section>
 
         <section class="expense-container">
-          <h3 class="list-title">Wydatek</h3>
+          <h3 class="list-title">Expense</h3>
           <div class="income-expense-header-container">
             <input
               type="text"
-              placeholder="Nazwa wydatku"
+              placeholder="Expense name"
               class="name-input input"
               id="expense-name-input"
             />
             <input
               type="number"
-              placeholder="Kwota"
+              placeholder="Amount"
               class="amount-input input"
               id="amount-expense-input"
             />
-            <button class="add-btn" id="expense-add-button">Dodaj</button>
+            <button class="add-btn" id="expense-add-button">Add</button>
           </div>
           <div class="list-container" id="expense-list-container">
             <ul class="list-items" id="expense-list"></ul>
           </div>
           <div class="sum-container">
-            <p class="sum-title">Suma wydatków:</p>
-            <p class="sum" id="expense-sum">0 zł</p>
+            <p class="sum-title">Total expense:</p>
+            <p class="sum" id="expense-sum">0 eur</p>
           </div>
         </section>
       </section>
 
       <footer class="app-footer">
-        <p class="company-name">BudgetApp Company Sp. z o.o. ©</p>
+        <p class="company-name">BudgetApp Company GmbH ©</p>
         <div class="fb-insta-logo-container">
           <button class="footer-icon-btn">
             <i class="fa-brands fa-facebook-f fa-lg"></i>
